@@ -36,6 +36,9 @@ module FrontApi
     # An object whose key is the `name` property defined for the custom field in the Front UI. The value of the key must use the same `type` specified for the custom field, as described in https://dev.frontapp.com/reference/custom-fields
     attr_accessor :custom_fields
 
+    # List of handles used to reach the contact
+    attr_accessor :handles
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -45,7 +48,8 @@ module FrontApi
         :'is_spammer' => :'is_spammer',
         :'links' => :'links',
         :'group_names' => :'group_names',
-        :'custom_fields' => :'custom_fields'
+        :'custom_fields' => :'custom_fields',
+        :'handles' => :'handles'
       }
     end
 
@@ -63,7 +67,8 @@ module FrontApi
         :'is_spammer' => :'Boolean',
         :'links' => :'Array<String>',
         :'group_names' => :'Array<String>',
-        :'custom_fields' => :'Object'
+        :'custom_fields' => :'Object',
+        :'handles' => :'Array<ContactHandle>'
       }
     end
 
@@ -119,6 +124,12 @@ module FrontApi
       if attributes.key?(:'custom_fields')
         self.custom_fields = attributes[:'custom_fields']
       end
+
+      if attributes.key?(:'handles')
+        if (value = attributes[:'handles']).is_a?(Array)
+          self.handles = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -147,7 +158,8 @@ module FrontApi
           is_spammer == o.is_spammer &&
           links == o.links &&
           group_names == o.group_names &&
-          custom_fields == o.custom_fields
+          custom_fields == o.custom_fields &&
+          handles == o.handles
     end
 
     # @see the `==` method
@@ -159,7 +171,7 @@ module FrontApi
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, description, avatar, is_spammer, links, group_names, custom_fields].hash
+      [name, description, avatar, is_spammer, links, group_names, custom_fields, handles].hash
     end
 
     # Builds the object from hash
