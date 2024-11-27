@@ -42,28 +42,6 @@ module FrontApi
     # Timestamp of the last tag update
     attr_accessor :updated_at
 
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -169,19 +147,7 @@ module FrontApi
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      highlight_validator = EnumAttributeValidator.new('String', ["grey", "pink", "red", "orange", "yellow", "green", "light-blue", "blue", "purple"])
-      return false unless highlight_validator.valid?(@highlight)
       true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] highlight Object to be assigned
-    def highlight=(highlight)
-      validator = EnumAttributeValidator.new('String', ["grey", "pink", "red", "orange", "yellow", "green", "light-blue", "blue", "purple"])
-      unless validator.valid?(highlight)
-        fail ArgumentError, "invalid value for \"highlight\", must be one of #{validator.allowable_values}."
-      end
-      @highlight = highlight
     end
 
     # Checks equality by comparing each attribute.
